@@ -1,0 +1,37 @@
+# Simulation files
+*.vcd
+*.vvp
+sim
+dump.vcd
+
+# Waveform files
+*.fst
+*.ghw
+
+# Compiled files
+*.o
+*.out
+
+# Logs
+*.log
+
+# Temporary files
+*~
+*.swp
+*.swo
+.DS_Store
+
+# IDE files
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+
+# Results directories (if you want to exclude large result files)
+# Uncomment if needed:
+# results/
+# *.spef
+# *.def
+# *.gds
