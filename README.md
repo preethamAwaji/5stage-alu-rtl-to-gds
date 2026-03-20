@@ -358,62 +358,15 @@ All results from **OpenROAD STAPostPNR** with extracted SPEF parasitics.
 
 ---
 
-## Usage
+## Design Highlights
 
-### Run on Google Colab
+### Synchronous Reset Implementation
 
-Open `colab/RTL_TO_GDS_CLOUD.ipynb` in Google Colab and run all cells in order.
+The `sky130_fd_sc_hd` library maps synchronous-reset flip-flops to `DFRTP` cells natively. All pipeline registers use `always @(posedge clk)` with `rst` as a synchronous condition inside the block, ensuring clean synthesis without `PROC_DFF` conflicts.
 
-The notebook:
-- Installs Nix + LibreLane automatically
-- Writes `spm.v` from the `%%writefile` cell
-- Runs all 17 implementation steps interactively
-- Streams progress and displays layout previews at each step
+### One-Hot Mux Architecture
 
-### Simulate locally (Icarus Verilog)
-
-```bash
-# Compile
-iverilog -o sim rtl/spm.v rtl/tb_spm.v
-
-# Run
-vvp sim
-
-# View waveforms
-gtkwave dump.vcd
-```
-
-### Quick functional check — single ADD
-
-```verilog
-// op=ADD(0000), a=5, b=3 via bypass
-instr        = {4'b0000, 28'b0};
-bypass_a     = 32'd5;
-bypass_b     = 32'd3;
-bypass_valid = 1;
-
-// result_out = 32'd8  after 4 clock cycles
-```
-
----
-
-## Design Notes
-
-### Why synchronous reset?
-
-The `sky130_fd_sc_hd` library maps synchronous-reset flip-flops to `DFRTP` cells natively. Using `always @(posedge clk or posedge rst)` (async reset) caused Yosys `PROC_DFF` to throw:
-
-```
-ERROR: Multiple edge sensitive events found for this signal!
-```
-
-**Fix:** All pipeline registers use `always @(posedge clk)` with `rst` as a synchronous condition inside the block.
-
-### Why one-hot assign mux in alu_core?
-
-The original `always @(*)` `case(op)` in `alu_core` conflicted with the pipeline DFF elaboration during Yosys hierarchy flattening.
-
-**Fix:** Replaced with pure `assign` one-hot masking:
+The ALU core uses pure `assign` one-hot masking instead of `always @(*)` case statements to avoid conflicts with pipeline DFF elaboration during Yosys hierarchy flattening:
 
 ```verilog
 wire [31:0] mux_add  = {32{op == `ALU_ADD}}  & add_r;
@@ -422,47 +375,15 @@ wire [31:0] mux_sub  = {32{op == `ALU_SUB}}  & sub_r;
 assign result = mux_add | mux_sub | mux_and | ...;
 ```
 
-Zero processes — zero `PROC_DFF` conflicts. Maps cleanly to AND-OR trees on sky130.
+This approach maps cleanly to AND-OR trees on sky130 with zero process conflicts.
 
-### Setup violations at SS corner
+### Timing Characteristics
 
-The `_ss_100C_1v60` corners show setup violations. This is the most pessimistic PVT combination on sky130A (slow process, 100°C junction temp, 1.6V supply — 11% below nominal). All TT and FF corners pass with 3.3–5.7 ns of positive slack.
-
-**To resolve:**
-
-```python
-# In Config.interactive() — relax clock period for full SS closure
-Config.interactive("spm", PDK="sky130A", CLOCK_PERIOD=12, ...)
-```
+All TT and FF corners pass with 3.3–5.7 ns of positive slack. Setup violations occur only at SS corners (slow-slow process, 100°C, 1.6V) — the most pessimistic PVT combination on sky130A.
 
 ---
 
-## Repository Structure
-
-```
-EVOLVE-3X-5stage-alu-rtl-gds/
-├── README.md
-├── rtl/
-│   └── spm.v                        # Complete synthesizable Verilog
-├── colab/
-│   └── RTL_TO_GDS_CLOUD.ipynb       # LibreLane Google Colab notebook
-├── reports/
-│   └── EVOLVE3X_5Stage_ALU_RTL_to_GDS_Report.docx
-├── results/
-│   ├── synthesis/                   # Yosys netlist (.nl.v)
-│   ├── floorplan/                   # DEF after floorplan
-│   ├── routing/                     # Final routed DEF
-│   ├── gds/                         # Final GDSII (.gds)
-│   ├── spef/                        # Parasitic extraction (.spef)
-│   ├── timing/                      # STA reports (.rpt, .sdf, .lib)
-│   └── drc_lvs/                     # Magic DRC + Netgen LVS logs
-└── docs/
-    └── architecture.md
-```
-
----
-
-## Tools & References
+## Tools & Technologies
 
 | Tool | Version | Purpose |
 |------|---------|---------|
@@ -476,28 +397,9 @@ EVOLVE-3X-5stage-alu-rtl-gds/
 
 ---
 
-## Future Work
-
-- [ ] Set `CLOCK_PERIOD=12` for full SS-corner timing closure
-- [ ] Register file (32×32) integration → full execution unit
-- [ ] Branch comparator unit (BEQ, BNE, BLT, BGE)
-- [ ] Load/store memory interface in Stage 4
-- [ ] Automatic hazard detection unit asserting `bypass_valid`
-- [ ] RISC-V RV32I decoder → complete integer pipeline
-- [ ] Formal verification with SymbiYosys
-- [ ] Efabless chipIgnite MPW submission
-
----
-
 ## Acknowledgments
 
-Special thanks to:
-
-- **[ChipMonk India](https://chipmonk.in/)** - For providing training and resources in open-source VLSI design
-- **Er. Anoushka Tripathi** - For guidance and mentorship throughout this project
-- **[OpenLane](https://github.com/The-OpenROAD-Project/OpenLane)** / **[LibreLane](https://github.com/efabless/LibreLane)** - For the complete open-source RTL-to-GDS flow
-- **[SkyWater PDK](https://github.com/google/skywater-pdk)** - For the open-source 130nm process design kit
-- **[Google Colab](https://colab.research.google.com/)** - For providing free cloud computing resources
+Thanks to EVOLVE.3X and Anoushka Tripathi for their guidance and support.
 
 ---
 
