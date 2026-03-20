@@ -47,7 +47,7 @@ spm  (top)
 ### Pipeline Stages
 
 <div align="center">
-  <img src="5stage_alu_block_diagram.svg" alt="5-Stage ALU Block Diagram" width="100%">
+  <img src="images/5stage_alu_block_diagram.svg" alt="5-Stage ALU Block Diagram" width="100%">
 </div>
 
 ```
@@ -163,54 +163,54 @@ RTL (spm.v)
 
 #### I/O Placement
 <div align="center">
-  <img src="ioplacement.png" alt="I/O Placement" width="80%">
+  <img src="images/ioplacement.png" alt="I/O Placement" width="80%">
   <p><em>Metal pins placed on die boundary for all top-level ports</em></p>
 </div>
 
 #### Power Distribution Network (PDN)
 <div align="center">
-  <img src="pdn.png" alt="PDN Generation" width="80%">
+  <img src="images/pdn.png" alt="PDN Generation" width="80%">
   <p><em>VDD/VSS power grid with 2 µm stripes at 30 µm pitch</em></p>
 </div>
 
 #### Global Placement
 <div align="center">
-  <img src="gpl.png" alt="Global Placement" width="80%">
+  <img src="images/gpl.png" alt="Global Placement" width="80%">
   <p><em>Wirelength-optimal fuzzy cell placement</em></p>
 </div>
 
 #### Detailed Placement
 <div align="center">
-  <img src="dpl.png" alt="Detailed Placement" width="80%">
+  <img src="images/dpl.png" alt="Detailed Placement" width="80%">
   <p><em>Grid-legal placement with 1791 filler instances</em></p>
 </div>
 
 #### Clock Tree Synthesis
 <div align="center">
-  <img src="cts.png" alt="Clock Tree Synthesis" width="80%">
+  <img src="images/cts.png" alt="Clock Tree Synthesis" width="80%">
   <p><em>17 clock buffers + 15 clock inverters inserted for balanced clock distribution</em></p>
 </div>
 
 #### Detailed Routing
 <div align="center">
-  <img src="drt.png" alt="Detailed Routing" width="80%">
+  <img src="images/drt.png" alt="Detailed Routing" width="80%">
   <p><em>1405 nets routed with 75,037 µm total wirelength across li1 → met5</em></p>
 </div>
 
 #### Tap/Decap/Fill Insertion
 <div align="center">
-  <img src="tdi.png" alt="Tap/Decap Insertion" width="80%">
+  <img src="images/tdi.png" alt="Tap/Decap Insertion" width="80%">
   <p><em>Tap cells for substrate connectivity</em></p>
 </div>
 
 <div align="center">
-  <img src="fill.png" alt="Fill Insertion" width="80%">
+  <img src="images/fill.png" alt="Fill Insertion" width="80%">
   <p><em>1915 fill cells + 416 tap cells inserted (3662 total cells)</em></p>
 </div>
 
 #### Final GDSII Layout
 <div align="center">
-  <img src="gds.png" alt="Final GDSII" width="80%">
+  <img src="images/gds.png" alt="Final GDSII" width="80%">
   <p><em>Silicon-ready GDSII layout — DRC clean, LVS clean</em></p>
 </div>
 
@@ -284,35 +284,35 @@ All results from **OpenROAD STAPostPNR** with extracted SPEF parasitics.
 <summary>Click to view detailed timing analysis reports</summary>
 
 <div align="center">
-  <img src="Screenshot 2026-03-19 200406.png" alt="Timing Analysis 1" width="90%">
+  <img src="images/Screenshot 2026-03-19 200406.png" alt="Timing Analysis 1" width="90%">
   <p><em>Timing report - Setup/Hold analysis</em></p>
   <br><br>
   
-  <img src="Screenshot 2026-03-19 200449.png" alt="Timing Analysis 2" width="90%">
+  <img src="images/Screenshot 2026-03-19 200449.png" alt="Timing Analysis 2" width="90%">
   <p><em>Multi-corner timing summary</em></p>
   <br><br>
   
-  <img src="Screenshot 2026-03-19 200538.png" alt="Timing Analysis 3" width="90%">
+  <img src="images/Screenshot 2026-03-19 200538.png" alt="Timing Analysis 3" width="90%">
   <p><em>Critical path analysis</em></p>
   <br><br>
   
-  <img src="Screenshot 2026-03-19 200721.png" alt="Timing Analysis 4" width="90%">
+  <img src="images/Screenshot 2026-03-19 200721.png" alt="Timing Analysis 4" width="90%">
   <p><em>PVT corner analysis results</em></p>
   <br><br>
   
-  <img src="Screenshot 2026-03-19 200734.png" alt="Timing Analysis 5" width="90%">
+  <img src="images/Screenshot 2026-03-19 200734.png" alt="Timing Analysis 5" width="90%">
   <p><em>Slack distribution and timing paths</em></p>
   <br><br>
   
-  <img src="Screenshot 2026-03-19 200813.png" alt="Timing Analysis 6" width="90%">
+  <img src="images/Screenshot 2026-03-19 200813.png" alt="Timing Analysis 6" width="90%">
   <p><em>Setup timing violations detail</em></p>
   <br><br>
   
-  <img src="Screenshot 2026-03-19 200830.png" alt="Timing Analysis 7" width="90%">
+  <img src="images/Screenshot 2026-03-19 200830.png" alt="Timing Analysis 7" width="90%">
   <p><em>Hold timing verification</em></p>
   <br><br>
   
-  <img src="Screenshot 2026-03-19 200840.png" alt="Timing Analysis 8" width="90%">
+  <img src="images/Screenshot 2026-03-19 200840.png" alt="Timing Analysis 8" width="90%">
   <p><em>Final timing closure summary</em></p>
 </div>
 
@@ -498,6 +498,12 @@ Special thanks to:
 - **[OpenLane](https://github.com/The-OpenROAD-Project/OpenLane)** / **[LibreLane](https://github.com/efabless/LibreLane)** - For the complete open-source RTL-to-GDS flow
 - **[SkyWater PDK](https://github.com/google/skywater-pdk)** - For the open-source 130nm process design kit
 - **[Google Colab](https://colab.research.google.com/)** - For providing free cloud computing resources
+
+---
+
+## Acknowledgments
+
+Thanks to EVOLVE.3X and Anoushka Tripathi for their guidance and support.
 
 ---
 
