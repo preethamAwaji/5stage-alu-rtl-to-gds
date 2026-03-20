@@ -489,6 +489,18 @@ EVOLVE-3X-5stage-alu-rtl-gds/
 
 ---
 
+## Acknowledgments
+
+Special thanks to:
+
+- **[ChipMonk India](https://chipmonk.in/)** - For providing training and resources in open-source VLSI design
+- **Er. Anoushka Tripathi** - For guidance and mentorship throughout this project
+- **[OpenLane](https://github.com/The-OpenROAD-Project/OpenLane)** / **[LibreLane](https://github.com/efabless/LibreLane)** - For the complete open-source RTL-to-GDS flow
+- **[SkyWater PDK](https://github.com/google/skywater-pdk)** - For the open-source 130nm process design kit
+- **[Google Colab](https://colab.research.google.com/)** - For providing free cloud computing resources
+
+---
+
 ## License
 
 MIT License — see LICENSE for details.
@@ -497,7 +509,7 @@ MIT License — see LICENSE for details.
 
 <div align="center">
 
-**EVOLVE.3X — Open Hardware. Open Silicon. Open Source.**
+**Open Hardware. Open Silicon. Open Source.**
 
 Built with [LibreLane](https://github.com/efabless/LibreLane) · [SkyWater sky130A](https://github.com/google/skywater-pdk) · [Google Colab](https://colab.research.google.com/)
 

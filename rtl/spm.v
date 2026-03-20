@@ -1,6 +1,6 @@
 // ============================================================
 //  5-Stage Pipelined 32-bit ALU - SYNC RESET (sky130A clean)
-//  EVOLVE.3X | RTL-to-GDS via LibreLane / sky130A
+//  RTL-to-GDS via LibreLane / sky130A
 //  Top module: spm
 // ============================================================
 
